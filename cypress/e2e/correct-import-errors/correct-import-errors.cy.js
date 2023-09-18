@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import moment from "moment";
 import receiptsResponse from "../receipts/receipts.constants";
 import correctImpoortErrorsMocKData from "./correct-import-errors-mock-data";
 
@@ -86,9 +87,9 @@ describe('testing correct import errors page', () => {
                     .find('.mat-column-fuelEventId')
                     .should('have.text', response.body.content.items[index].fuelEventId)
 
-                // cy.get(tableData)
-                // .find('.mat-column-createDate')
-                // .should('have.text', format(response.body.content.items[index].createDate), 'MM/dd/yyyy')
+                cy.get(tableData)
+                .find('.mat-column-createDate')
+                .should('have.text', moment(response.body.content.items[index].createDate).format('MM/DD/yyyy'))
 
                 cy.get(tableData)
                     .find('.mat-column-flightNumber')
