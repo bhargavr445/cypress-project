@@ -61,7 +61,7 @@ describe('testing correct import errors page', () => {
     it('should test data in table', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrors?*', correctImpoortErrorsMocKData.tableData)
             .as('correctImportErrorsApiCall');
-        
+
         cy.visit('http://localhost:4200/importerrors');
         cy.wait('@correctImportErrorsApiCall').then(({ response }) => {
             cy.get('table').find('tbody tr').should('have.length', response.body.content.items.length);
@@ -74,37 +74,37 @@ describe('testing correct import errors page', () => {
                     .should('exist')
 
                 cy.get(tableData)
-                .find('.mat-column-actions')
-                .find('.fa-trash')
-                .should('exist')
-                
-                cy.get(tableData)
-                .find('.mat-column-locationId')
-                .should('have.text', response.body.content.items[index].locationId);
+                    .find('.mat-column-actions')
+                    .find('.fa-trash')
+                    .should('exist')
 
                 cy.get(tableData)
-                .find('.mat-column-fuelEventId')
-                .should('have.text', response.body.content.items[index].fuelEventId)
+                    .find('.mat-column-locationId')
+                    .should('have.text', response.body.content.items[index].locationId);
+
+                cy.get(tableData)
+                    .find('.mat-column-fuelEventId')
+                    .should('have.text', response.body.content.items[index].fuelEventId)
 
                 // cy.get(tableData)
                 // .find('.mat-column-createDate')
                 // .should('have.text', format(response.body.content.items[index].createDate), 'MM/dd/yyyy')
 
                 cy.get(tableData)
-                .find('.mat-column-flightNumber')
-                .should('have.text', response.body.content.items[index].flightNumber)
+                    .find('.mat-column-flightNumber')
+                    .should('have.text', response.body.content.items[index].flightNumber)
 
                 cy.get(tableData)
-                .find('.mat-column-customerId')
-                .should('have.text', response.body.content.items[index].customerId)
+                    .find('.mat-column-customerId')
+                    .should('have.text', response.body.content.items[index].customerId)
 
                 cy.get(tableData)
-                .find('.mat-column-sourceReference')
-                .should('have.text', response.body.content.items[index].sourceReference)
+                    .find('.mat-column-sourceReference')
+                    .should('have.text', response.body.content.items[index].sourceReference)
 
                 cy.get(tableData)
-                .find('.mat-column-transactionType')
-                .should('have.text', response.body.content.items[index].transactionType)
+                    .find('.mat-column-transactionType')
+                    .should('have.text', response.body.content.items[index].transactionType)
 
             })
         })
