@@ -49,3 +49,5 @@ export function transform(value, charLength) {
   const derivedValue = value && Array.isArray(value) && value.length > 0 ? value[0] : value.toString();
   return derivedValue.length > charLength ? derivedValue.substring(0, charLength - 2).trim() + '...' : derivedValue;
 }
+
+
