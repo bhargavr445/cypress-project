@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * checking for placeholder text..
+ */
+Cypress.Commands.add('checkForPlaceholderCmd', (mainElementId, inputId, placeHolderText) => {
+    cy.get(`#${mainElementId}`)
+        .find(`#${inputId}`)
+        .should('exist')
+        .invoke('attr', 'placeholder')
+        .should('eq', `${placeHolderText}`);
+});
+

@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import receiptsResponse from "../receipts/receipts.constants";
+import receiptsResponse from "../../receipts/receipts.constants";
 import specialtagsMockData from "./special-tag";
 
 describe('test special tag screen in admin section', () => {
@@ -58,11 +58,13 @@ describe('test special tag screen in admin section', () => {
                 .invoke('attr', 'placeholder')
                 .should('eq', 'Type here...');
 
-            cy.get('#special_tag_add')
-                .find('#descriptionId')
-                .should('exist')
-                .invoke('attr', 'placeholder')
-                .should('eq', 'Type here...');
+            // cy.get('#special_tag_add')
+            //     .find('#descriptionId')
+            //     .should('exist')
+            //     .invoke('attr', 'placeholder')
+            //     .should('eq', 'Type here...');
+
+                cy.checkForPlaceholderCmd('special_tag_add', 'descriptionId', 'Type here...');
 
             cy.get('#special_tag_add')
                 .find('#active')
