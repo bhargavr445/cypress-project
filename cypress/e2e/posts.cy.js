@@ -304,7 +304,7 @@ describe('Testing Pagination', () => {
   //   cy.intercept('POST', 'https://login.microsoftonline.com/*', (req) => {
   //     // Handle the intercepted request here
   //   });
-  //   // cy.visit('http://localhost:4200')
+  //   // cy.visit('')
   // })
 
   // beforeEach(() => {
@@ -317,7 +317,7 @@ describe('Testing Pagination', () => {
   //   cy.wait('@locationsData');
   //   // cy.wait('@getFuelDay');
   //   // cy.wait('@getImportErrorsCount');
-  //   cy.visit('http://localhost:4200')
+  //   cy.visit('')
   // })
 
 
@@ -331,12 +331,12 @@ describe('Testing Pagination', () => {
   xit('should test if we have all labels', () => {
     
     // cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrorsCount*', receiptsResponse.correctImportsResp).as('getImportErrorsCount')
-    // cy.visit('http://localhost:4200/receiving/list');
+    // cy.visit('/receiving/list');
     // cy.get('#sideNavFuelReceipt').then((el) => {
       // expect(el).should('click');
       cy.intercept('GET', 'https://app-t-l-fimapi.azurewebsites.net/v1/listofreceipts/ACY327', receiptsResponse.listOfReceipts).as('listofreceipts');
       cy.get('#sideNavFuelReceipt').click();
-      // cy.visit('http://localhost:4200/receiving/list');
+      // cy.visit('/receiving/list');
     // cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/fuelTypes*', receiptsResponse.fuelTypes).as('fuelTypes');
     // cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/fuelSuppliers*', receiptsResponse.fuelSuppliers).as('fuelSuppliers');
     // cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/fuelCarriers*', receiptsResponse.fuelCarriers).as('fuelCarriers');
@@ -381,7 +381,7 @@ describe('Testing Pagination', () => {
   xit('should test closing screen', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor')
     // cy.wait('@closingTableDataApiInterceptor')
     cy.get('.text-start').should('contain', 'ACY327 Daily Balance');

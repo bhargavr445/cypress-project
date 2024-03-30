@@ -11,8 +11,8 @@ describe('Closing Screen testing', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrorsCount*', receiptsResponse.correctImportsResp).as('getImportErrorsCount');
 
     cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
-    cy.wait('@locationsData');
-    cy.visit('http://localhost:4200')
+    cy.wait('erifies the user logged in has the correct preferred name@locationsData');
+    cy.visit('')
   });
 
   it('verifies the user logged in has the correct preferred name', () => {
@@ -26,7 +26,7 @@ describe('Closing Screen testing', () => {
   it('should test if page contains buttons and aily balance text', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor');
     cy.wait('@closingTableDataApiInterceptor').then(({ request, response }) => {
       
@@ -55,7 +55,7 @@ describe('Closing Screen testing', () => {
 
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor')
     cy.wait('@closingTableDataApiInterceptor')
 
@@ -98,7 +98,7 @@ describe('Closing Screen testing', () => {
   it('should test data in unit level rows', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor');
     cy.wait('@closingTableDataApiInterceptor').then(({ response }) => {
       cy.get('mat-expansion-panel').should('have.length', response.body.content.items.length);
@@ -134,7 +134,7 @@ describe('Closing Screen testing', () => {
 
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor');
     cy.wait('@closingTableDataApiInterceptor')
 
@@ -200,7 +200,7 @@ describe('Closing Screen testing', () => {
   it('should test closing screen', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor')
     cy.wait('@closingTableDataApiInterceptor')
 
@@ -224,7 +224,7 @@ describe('Closing Screen testing', () => {
   it('should test transactions', () => {
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponse).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor');
     cy.wait('@closingTableDataApiInterceptor').then(({response}) => {
       cy.get('mat-expansion-panel').should('have.length', response.body.content.items.length);
@@ -264,7 +264,7 @@ describe('Closing Screen testing', () => {
 
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getNetConversionFactors*', receiptsResponse.netConversionFactors).as('netConversionsInterceptor');
     cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getAllUnitTransactions*', receiptsResponse.closingScreenResponseWithNoRecords).as('closingTableDataApiInterceptor');
-    cy.visit('http://localhost:4200/closing');
+    cy.visit('/closing');
     cy.wait('@netConversionsInterceptor');
     cy.wait('@closingTableDataApiInterceptor').then(({request, response}) => {
       cy.log(JSON.stringify(response));

@@ -17,7 +17,7 @@
 import './commands'
 
 function loginViaAAD(username, password) {
-    cy.visit('http://localhost:4200/')
+    cy.visit('/')
     // cy.get('button#signIn').click()
 
     // Login to your AAD tenant.

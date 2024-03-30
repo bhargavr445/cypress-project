@@ -13,7 +13,7 @@ describe('testing correct import errors page', () => {
 
         cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
         cy.wait('@locationsData');
-        cy.visit('http://localhost:4200')
+        cy.visit('')
     });
 
     it('should test table when no records found', () => {
@@ -21,7 +21,7 @@ describe('testing correct import errors page', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrors?*', correctImpoortErrorsMocKData.tableDataWithNoRecords)
             .as('correctImportErrorsApiCall');
 
-        cy.visit('http://localhost:4200/importerrors');
+        cy.visit('/importerrors');
 
         cy.get('#no-records-found-message')
             .should('exist')
@@ -34,7 +34,7 @@ describe('testing correct import errors page', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrors?*', correctImpoortErrorsMocKData.tableData)
             .as('correctImportErrorsApiCall');
 
-        cy.visit('http://localhost:4200/importerrors')
+        cy.visit('/importerrors')
         cy.wait('@correctImportErrorsApiCall').then(({ response }) => {
 
             cy.get('h5')
@@ -48,7 +48,7 @@ describe('testing correct import errors page', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrors?*', correctImpoortErrorsMocKData.tableData)
             .as('correctImportErrorsApiCall');
 
-        cy.visit('http://localhost:4200/importerrors');
+        cy.visit('/importerrors');
 
         cy.wait('@correctImportErrorsApiCall').then(({ response }) => {
             cy.get('table')
@@ -63,7 +63,7 @@ describe('testing correct import errors page', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getImportErrors?*', correctImpoortErrorsMocKData.tableData)
             .as('correctImportErrorsApiCall');
 
-        cy.visit('http://localhost:4200/importerrors');
+        cy.visit('/importerrors');
         cy.wait('@correctImportErrorsApiCall').then(({ response }) => {
             cy.get('table').find('tbody tr').should('have.length', response.body.content.items.length);
 

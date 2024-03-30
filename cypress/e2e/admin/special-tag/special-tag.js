@@ -81,7 +81,27 @@ const specialtagsMockData = {
         "isSuccess": false
     },
 
-    tableHeaders: ['Actions', 'Tag Name', 'Description', 'Active']
+    tableHeaders: ['Actions', 'Tag Name', 'Description', 'Active'],
+
+    editRecordResponse: {
+        "content": {
+            "item": {
+                "id": 144,
+                "locationId": "ACY327",
+                "tagName": "FRL",
+                "description": "Florida Flight",
+                "active": true,
+                "createDate": "2023-09-19T13:09:42.327",
+                "updateDate": "0001-01-01T00:00:00"
+            }
+        },
+        "error": {
+            "code": 0,
+            "messages": [],
+            "isError": false
+        },
+        "isSuccess": true
+    }
 
 }
 

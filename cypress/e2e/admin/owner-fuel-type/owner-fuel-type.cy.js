@@ -11,7 +11,7 @@ describe('test owner fuel type screen in admin section', () => {
 
         cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'));
         cy.wait('@locationsData');
-        cy.visit('http://localhost:4200');
+        cy.visit('');
     });
 
     it('should test table headers', () => {
@@ -19,7 +19,7 @@ describe('test owner fuel type screen in admin section', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/fuelTypes*', responses.fuelTypeDropDowns).as('fuelTypesDropDownApi')
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getallowners/*', responses.ownerDropdownsList).as('allOwnersDropDownApi')
 
-        cy.visit('http://localhost:4200/admin/ownerfueltype');
+        cy.visit('/admin/ownerfueltype');
         // cy.wait()
         cy.wait('@rosterApiCall').then(() => {
             // cy.log(JSON.stringify(response.body.content.output));
@@ -30,7 +30,7 @@ describe('test owner fuel type screen in admin section', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getallownerfueltypedetails*', responses.gridResponse).as('rosterApiCall');
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/fuelTypes/*', responses.fuelTypeDropDowns).as('fuelTypesDropDownApi')
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getallowners/*', responses.ownerDropdownsList).as('allOwnersDropDownApi');
-        cy.visit('http://localhost:4200/admin/ownerfueltype');
+        cy.visit('/admin/ownerfueltype');
         cy.wait('@allOwnersDropDownApi').then(({ response }) => {
 
             cy.get('owner-fuel-type-form')

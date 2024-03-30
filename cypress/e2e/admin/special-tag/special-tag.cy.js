@@ -12,12 +12,12 @@ describe('test special tag screen in admin section', () => {
 
         cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
         cy.wait('@locationsData');
-        cy.visit('http://localhost:4200')
+        cy.visit('')
     });
 
     it('should test landing page with data in table', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getspecialtagsall/*', specialtagsMockData.gridResponse).as('specialTagTableResponse');
-        cy.visit('http://localhost:4200/admin/specialtag');
+        cy.visit('/admin/specialtag');
         cy.wait('@specialTagTableResponse').then(({ request, response }) => {
 
             cy.get('#special_tag_add')
@@ -64,7 +64,7 @@ describe('test special tag screen in admin section', () => {
             //     .invoke('attr', 'placeholder')
             //     .should('eq', 'Type here...');
 
-                cy.checkForPlaceholderCmd('special_tag_add', 'descriptionId', 'Type here...');
+            cy.checkForPlaceholderCmd('special_tag_add', 'descriptionId', 'Type here...');
 
             cy.get('#special_tag_add')
                 .find('#active')
@@ -83,7 +83,7 @@ describe('test special tag screen in admin section', () => {
     /* test table when no records avialable to display */
     it('should test landing page without records in table', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getspecialtagsall/*', specialtagsMockData.gridResponseWithNoRecords).as('specialTagTableResponse');
-        cy.visit('http://localhost:4200/admin/specialtag');
+        cy.visit('/admin/specialtag');
         cy.wait('@specialTagTableResponse').then(({ request, response }) => {
 
             cy.get('#no-records-found-message')
@@ -117,7 +117,7 @@ describe('test special tag screen in admin section', () => {
         }).as('addNewTagApiCall');
 
 
-        cy.visit('http://localhost:4200/admin/specialtag');
+        cy.visit('/admin/specialtag');
 
         cy.get('#special_tag_add')
             .find('#tagNameId')
@@ -163,6 +163,7 @@ describe('test special tag screen in admin section', () => {
                     cy.get(tableData).find('.mat-column-tagName').should('have.text', response.body.content.items[index].tagName);
                     cy.get(tableData).find('.mat-column-description').should('have.text', response.body.content.items[index].description);
                     cy.get(tableData).find('.mat-column-active').should('have.text', response.body.content.items[index].active ? 'Active' : 'Inactive')
+                    cy.get(tableData).find('.mat-column-actions').should('exist');
                 })
         })
 
@@ -170,7 +171,7 @@ describe('test special tag screen in admin section', () => {
 
     it('should test add form in error scenario', () => {
         cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getspecialtagsall/*', specialtagsMockData.gridResponse).as('specialTagTableResponse');
-        cy.visit('http://localhost:4200/admin/specialtag');
+        cy.visit('/admin/specialtag');
 
         cy.intercept('POST', 'https://app-d-l-fimapi.azurewebsites.net/v1/insertspecialtag?*', {
             statusCode: 500,
@@ -223,5 +224,67 @@ describe('test special tag screen in admin section', () => {
             .should('not.have.attr', 'disabled')
 
     });
+
+    it.only('should navigate to edit page', () => {
+        cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getspecialtagsall/*', specialtagsMockData.gridResponse).as('specialTagTableResponse');
+        cy.intercept('GET', 'https://app-d-l-fimapi.azurewebsites.net/v1/getspecialtagdetails/*', specialtagsMockData.editRecordResponse).as('editRecordResponse');
+        cy.visit('/admin/specialtag');
+
+        /* 
+            clicling on edit icon with in the table
+            After doing this we will navigate to edit page
+         */
+        cy.wait('@specialTagTableResponse').then(({ request, response }) => {
+            cy.get('.special-tag-table')
+                .find('table .fa-pen-to-square')
+                .should('exist')
+                .first()
+                .click()
+        });
+
+        /*
+            will intercept edit API call and checking things inside edit page
+         */
+        cy.wait('@editRecordResponse').then(({ request, response }) => {
+            cy.log(JSON.stringify(response));
+            cy.log(JSON.stringify(response.body.content.item))
+            const editRecord = response.body.content.item;
+
+            cy.get('special-tag-edit h5').should('have.text', 'Special Tag');
+
+            cy.get('special-tag-edit')
+                .find('label[for="tagName"]')
+                .should('have.text', 'Tag Name *');
+
+            cy.get('special-tag-edit')
+                .find('label[for="description"]')
+                .should('have.text', 'Tag Description *');
+
+            cy.get('special-tag-edit')
+                .find('label[for="active"]')
+                .should('have.text', 'Active');
+
+            cy.get('special-tag-edit').find('.btn-common').should('be.enabled')
+            cy.get('special-tag-edit').find('.btn-cancel').should('be.enabled')
+
+            cy.get('special-tag-edit')
+                .find('#tagNameId')
+                .should('have.value', editRecord.tagName);
+
+            cy.get('special-tag-edit')
+                .find('#descriptionId')
+                .should('have.value', editRecord.description);
+
+            cy.get('special-tag-edit')
+                .find('#active')
+                .should(editRecord.active ? 'be.checked' : 'be.unchecked');
+
+                cy.get('special-tag-edit').find('.btn-common').click();
+                // cy.get('.alert-dismissible')
+                // .should('exist')
+                // .should('have.text', "Special Tag Saved.");
+
+        })
+    })
 
 })

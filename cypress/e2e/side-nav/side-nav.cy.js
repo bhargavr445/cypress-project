@@ -13,7 +13,7 @@ describe('should test side nav', () => {
 
         cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
         cy.wait('@locationsData');
-        cy.visit('http://localhost:4200/home')
+        cy.visit('/home')
     });
 
     it('should check if all the options exists', () => {
